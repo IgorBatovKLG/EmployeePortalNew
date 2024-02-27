@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портал сотрудника | Создание письма</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<!-- Подключение navbar через th:insert -->
+<div th:insert="~{navbar :: copy}"></div>
+
+<!-- Основной контент -->
+<div id="main">
+    <td><h1 th:text="${error}" align="center"></h1></td>
+    <td><h1 align="center" style="color: red;">Обращаем ваше внимания, что ответственность за содержание письма лежит на руководителе подразделения</h1></td>
+    <td><h2>Создать письма по вынесеным решениям</h2></td>
+    <div class="container">
+        <form action="/mail/good" method="get">
+
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col">
+                        <td><h3>Бюро</h3></td>
+                        <select class="custom-select custom-select-lg mb-3" name="buro">
+                            <option  value="1001683">Бюро медико-социальной экспертизы №1</option>
+                            <option  value="1001684">Бюро медико-социальной экспертизы №2</option>
+                            <option  value="1001685">Бюро медико-социальной экспертизы №3</option>
+                            <option  value="1001686">Бюро медико-социальной экспертизы №4</option>
+                            <option  value="1001687">Бюро медико-социальной экспертизы №5</option>
+                            <option  value="1001688">Бюро медико-социальной экспертизы №6</option>
+                            <option  value="1001689">Бюро медико-социальной экспертизы №7</option>
+                            <option  value="1001690">Бюро медико-социальной экспертизы №8</option>
+                            <option  value="1001691">Бюро медико-социальной экспертизы №9</option>
+                            <option  value="1001692">Бюро медико-социальной экспертизы №10</option>
+                            <option  value="1001693">Бюро медико-социальной экспертизы №11</option>
+                            <option  value="1001694">Бюро медико-социальной экспертизы №12</option>
+                            <option  value="1001695">Бюро медико-социальной экспертизы №13</option>
+                            <option  value="1001697">Бюро медико-социальной экспертизы №15</option>
+                            <option  value="1001699">Бюро медико-социальной экспертизы №17</option>
+                            <option  value="1001700">Бюро медико-социальной экспертизы №18</option>
+                            <option  value="1001701">Бюро медико-социальной экспертизы №19</option>
+                            <option  value="1061474">Экспертный состав №1</option>
+                            <option  value="1061475">Экспертный состав №2</option>
+                            <option  value="1061476">Экспертный состав №3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!--<div class="col">
+                        <td><h3>Дата</h3></td>
+                        <input name="date" id="date" class="app-datepicker form-control app-date" type="date" data-id="report"/>
+
+
+
+                    </div>-->
+                    <div class="col">
+                        <td><h3>Дата</h3></td>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <input name="RegDateFrom" id="RegDateFrom" class="app-datepicker form-control" type="text" />
+                        </div>
+                        <div class="col-sm-1">
+
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="ml-3 dp-range-links" data-dp-from="RegDateFrom" data-dp-to="RegDateTo">
+                                <a href="#" data-type="today">сегодня</a>
+                                <a href="#" data-type="clear">очистить</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <td><h3></h3></td>
+                            <div class="col">
+                                <input class="form-control form-control-lg" type="text" name="executor" id="executor" placeholder="Исполнитель">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col">
+                                <input class="form-control form-control-lg" type="text" name="phone" id="phone" placeholder="Телефон исполнителя">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col">
+                                <button class="btn btn-primary" style="margin: 20px">Отправить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<!-- Bootstrap JS и Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
