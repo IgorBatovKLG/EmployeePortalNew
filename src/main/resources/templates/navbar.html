@@ -1,0 +1,35 @@
+<!-- navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy">
+    <a class="navbar-brand" href="#">Портал сотрудника</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- navbar.html -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy">
+        <!-- Ваши стили и разметка навбара -->
+        <style>
+            /* Define a style for the "menu-item" class */
+            .menu-item {
+                color: #555555; /* Set the color to gray or your desired shade */
+            }
+        </style>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li th:each="menuItem : ${menuItems}" class="nav-item menu-item" th:classappend="${#lists.isEmpty(menuItem.subMenu)} ? 'no-dropdown'">
+                    <a th:if="${#lists.isEmpty(menuItem.subMenu)}" th:href="${menuItem.url}" class="nav-link menu-item" th:text="${menuItem.name}"></a>
+                    <div th:if="${!#lists.isEmpty(menuItem.subMenu)}" class="nav-link dropdown menu-item">
+                        <a href="#" class="dropdown-toggle menu-item" th:id="'navbarDropdown-'" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${menuItem.name}"></a>
+                        <div class="dropdown-menu" th:aria-labelledby="'navbarDropdown-'">
+                            <a th:each="subMenuItem : ${menuItem.subMenu}" th:href="${subMenuItem.url}" class="dropdown-item menu-item" th:text="${subMenuItem.name}"></a>
+                        </div>
+                    </div>
+                </li>
+                <!-- Other menu items... -->
+            </ul>
+        </div>
+
+
+
+</nav>
