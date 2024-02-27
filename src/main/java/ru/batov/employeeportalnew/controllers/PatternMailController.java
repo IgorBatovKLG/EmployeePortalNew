@@ -36,7 +36,7 @@ public class PatternMailController {
         model.addAttribute("executor", executor);
         model.addAttribute("phone", phone);
 
-        return "mail_good";
+        return "mail/printing.html";
 
     }
 }
