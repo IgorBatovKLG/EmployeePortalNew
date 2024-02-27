@@ -1,6 +1,7 @@
 package ru.batov.employeeportalnew.services;
 
 import org.springframework.stereotype.Service;
+import ru.batov.employeeportalnew.GetCookies;
 
 import java.io.IOException;
 import java.net.URI;
@@ -16,14 +17,14 @@ public class EvaGetDataService {
 
     public String getStringJson(String jsonIn){
         String jsonOut = "";
-        //GetCookies getCookies = new GetCookies(); todo Получение куков
+        GetCookies getCookies = new GetCookies();
         try {
             String json = jsonIn;
 
             HttpClient client = HttpClient.newHttpClient();
 
-           // HashMap<String, String> cookies = getCookies.getCookies();
-            HashMap<String, String> cookies = null; //todo загрузка куков в запрос
+            HashMap<String, String> cookies = getCookies.getCookies();
+           // HashMap<String, String> cookies = null; //todo загрузка куков в запрос
             ArrayList keyCookies = new ArrayList(cookies.keySet());
             String Cookie = keyCookies.get(0) +"="+ cookies.get(keyCookies.get(0)) +"; "+ keyCookies.get(1) +"="+ cookies.get(keyCookies.get(1));
 

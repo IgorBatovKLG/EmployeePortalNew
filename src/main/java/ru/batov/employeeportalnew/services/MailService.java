@@ -27,8 +27,9 @@ public class MailService {
                 "{\"FieldName\":\"DecisionDate\",\"Value\":null,\"Values\":[\"" + date + "T00:00:00\",\"" + date + "T00:00:00\"],\"Type\":9,\"IsNegative\":false,\"Disabled\":false},{\"FieldName\":\"ExaminationPurposeID\",\"Type\":11,\"IsNegative\":false,\"Disabled\":false,\"Value\":null,\"Values\":[1,2,6,7,8]}," +
                 "{\"FieldName\":\"ExamBuroId\",\"Type\":11,\"IsNegative\":false,\"Disabled\":false,\"Value\":null,\"Values\":[\"" + buro + "\"]}" +
                 "],\"HidePeopleDoubles\":false,\"Page\":1,\"PageSize\":100,\"SortField\":null,\"IsSortDesc\":false}");
+
         String list = JsonPath.parse(stringJson).read("List").toString();
-        MailDataEvaModel model[] = gson.fromJson(list, MailDataEvaModel[].class);
+        MailDataEvaModel[] model = gson.fromJson(list, MailDataEvaModel[].class);
         List<PrintMailModel> printMailModels = new ArrayList<>();
         for (MailDataEvaModel mailDataEvaModel : model) {
             printMailModels.add(createPatternMail(mailDataEvaModel));
@@ -94,7 +95,6 @@ public class MailService {
         if (model.getPatientRepPersonLastName().split(" ").length>2){
             sexAndName = "Уважаемый(ая) " + model.getPatientRepPersonLastName().split(" ")[1] + " " + model.getPatientRepPersonLastName().split(" ")[2];
         }
-
         PrintMailModel printMailModel = PrintMailModel.builder()
                 .adres(model.getAddress())
                 .fullName(model.getLastName() + " " + model.getFirstName() +  " " + model.getSecondName())
@@ -196,8 +196,11 @@ public class MailService {
 
     public List<String> additionalText(MailDataEvaModel model){
         List<String> strings = new ArrayList<>();
+
         String paragraf2 = "В случае несогласия с решением бюро медико-социальной экспертизы Вы (Ваш законный или уполномоченный представитель) в месячный срок со дня получения решения можете обжаловать его в главное бюро, в случае несогласия с решением главного бюро — в месячный срок в Федеральное бюро МСЭ. Решения бюро, главного бюро, Федерального бюро могут быть обжалованы в суд в порядке, установленном законодательством Российской Федерации.";
         String paragraf3 = "Приложение:";
+        strings.add(paragraf2);
+        strings.add(paragraf3);
         try {
             if (model.getBlankNumber().isBlank()
                     & model.getIpraChildNumber().isBlank()

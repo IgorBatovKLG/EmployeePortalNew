@@ -33,7 +33,8 @@ public class PatternMailController {
 
 
         List<PrintMailModel> listPatternMail = mailService.getListPatternMail(date, buro);
-        model.addAttribute("name", listPatternMail);
+
+        model.addAttribute("listMail", listPatternMail);
         model.addAttribute("executor", executor);
         model.addAttribute("phone", phone);
 

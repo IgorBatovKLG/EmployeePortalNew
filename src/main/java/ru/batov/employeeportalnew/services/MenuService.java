@@ -13,7 +13,7 @@ public class MenuService {
         // Здесь может быть логика для загрузки данных из базы данных или другого источника
         // В этом примере просто возвращается фиктивный список пунктов меню
         List<MenuItem> menuItems1 = Arrays.asList(
-                new MenuItem("Создание письма", "/2", null),
+                new MenuItem("Создание письма", "/creatingMailForm", null),
                 new MenuItem("Трек номера", "/1", null),
                 new MenuItem("Статус отправления", "/1", null));
 
