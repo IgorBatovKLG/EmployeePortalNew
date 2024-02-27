@@ -31,6 +31,7 @@ public class PatternMailController {
                                @RequestParam(name = "phone", required = false, defaultValue = "") String phone){
 
 
+
         List<PrintMailModel> listPatternMail = mailService.getListPatternMail(date, buro);
         model.addAttribute("name", listPatternMail);
         model.addAttribute("executor", executor);
