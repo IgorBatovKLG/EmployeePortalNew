@@ -23,7 +23,7 @@ public class PatternMailController {
     public String creatingMailForm(){
         return "mail/creating_form.html";
     }
-
+@GetMapping("/printingMail")
     public String printingMail(Model model,
                                @RequestParam(name = "RegDateFrom", required = false, defaultValue = "") String date,
                                @RequestParam(name = "buro", required = false, defaultValue = "") String buro,
