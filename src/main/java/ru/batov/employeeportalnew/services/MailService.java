@@ -1,8 +1,10 @@
 package ru.batov.employeeportalnew.services;
 
 import com.google.gson.Gson;
+import com.jayway.jsonpath.JsonPath;
 import org.springframework.stereotype.Service;
 import ru.batov.employeeportalnew.models.MailDataEvaModel;
+import ru.batov.employeeportalnew.models.PrintMailModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,23 @@ public class MailService {
         this.evaGetDataService = evaGetDataService;
     }
 
-    public String createPatternMail(MailDataEvaModel model){
+    public List<PrintMailModel> getListPatternMail(String date, String buro){
+        String stringJson = evaGetDataService.getStringJson("{\"Columns\":[\"ExamBuroName\",\"InvalidityGroupName\",\"FirstName\",\"SecondName\",\"LastName\",\"DecisionDate\",\"BlankNumber\",\"IpraChildNumber\",\"IpraNumber\",\"Address\",\"PersonGender\",\"BuroManagerName\",\"ExpSostavManagerName\",\"PatientRepPersonLastName\",\"PatientPersonAge\",\"PurposesXml\",\"InvalidityPeriodId\",\"PrpNumber\",\"UptProfLossDegree\",\"UptDysfunctionDegreeTermId\"]," +
+                "\"Conditions\":[" +
+                "{\"FieldName\":\"DecisionDate\",\"Value\":null,\"Values\":[\"" + date + "T00:00:00\",\"" + date + "T00:00:00\"],\"Type\":9,\"IsNegative\":false,\"Disabled\":false},{\"FieldName\":\"ExaminationPurposeID\",\"Type\":11,\"IsNegative\":false,\"Disabled\":false,\"Value\":null,\"Values\":[1,2,6,7,8]}," +
+                "{\"FieldName\":\"ExamBuroId\",\"Type\":11,\"IsNegative\":false,\"Disabled\":false,\"Value\":null,\"Values\":[\"" + buro + "\"]}" +
+                "],\"HidePeopleDoubles\":false,\"Page\":1,\"PageSize\":100,\"SortField\":null,\"IsSortDesc\":false}");
+        String list = JsonPath.parse(stringJson).read("List").toString();
+        MailDataEvaModel model[] = gson.fromJson(list, MailDataEvaModel[].class);
+        List<PrintMailModel> printMailModels = new ArrayList<>();
+        for (MailDataEvaModel mailDataEvaModel : model) {
+            printMailModels.add(createPatternMail(mailDataEvaModel));
+        }
+        return printMailModels;
+    }
+
+    public PrintMailModel createPatternMail(MailDataEvaModel model){
+
         boolean child = false;
         boolean group = false;
         boolean upt = false;
@@ -39,31 +57,54 @@ public class MailService {
         } else if (model.getPurposesXml().toLowerCase().contains("разработки программы реабилитации лица")){
             prp = true;
         }
-
+        List<String> strings = new ArrayList<>();
         if (child){
             if(group) {
-                setDisabilityGroupChildren(model);
+                strings = setDisabilityGroupChildren(model);
             } else if (ipra) {
-                developIPRAChildren(model);
+                strings = developIPRAChildren(model);
             } else if (upt) {
-                setUPT(model);
+                strings = setUPT(model);
             } else if (prp){
-                developPRP(model);
+                strings = developPRP(model);
             }
 
         } else {
             if(group) {
-                setDisabilityGroupAdults(model);
+                strings = setDisabilityGroupAdults(model);
             } else if (ipra) {
-                developIPRAAdults(model);
+                strings = developIPRAAdults(model);
             } else if (upt) {
-                setUPT(model);
+                strings = setUPT(model);
             } else if (prp){
-                developPRP(model);
+                strings = developPRP(model);
             }
         }
+        String typeManager = "Руководитель бюро медико-социальной экспертизы";
+        if (model.getExamBuroName().toLowerCase().contains("состав")){
+            typeManager = "Руководитель экспертного состава медико-социальной экспертизы";
+            model.setBuroManagerName(model.getExpSostavManagerName());
+        }
+        String sexAndName = "НЕ УКАЗАН ПОЛ!";
+        if (model.getPersonGender().equals("ЖЕН")){
+            sexAndName = "Уважаемая " + model.getFirstName() + " " + model.getSecondName() + "!";
+        } else {
+            sexAndName = "Уважаемый " + model.getFirstName() + " " + model.getSecondName() + "!";
+        }
+        if (model.getPatientRepPersonLastName().split(" ").length>2){
+            sexAndName = "Уважаемый(ая) " + model.getPatientRepPersonLastName().split(" ")[1] + " " + model.getPatientRepPersonLastName().split(" ")[2];
+        }
 
-        return null;
+        PrintMailModel printMailModel = PrintMailModel.builder()
+                .adres(model.getAddress())
+                .fullName(model.getLastName() + " " + model.getFirstName() +  " " + model.getSecondName())
+                .sexAndName(sexAndName)
+                .paragraphs(strings)
+                .managerType(typeManager)
+                .managerName(model.getBuroManagerName())
+                .build();
+
+        return printMailModel;
     }
     public List<String> setDisabilityGroupAdults(MailDataEvaModel model){
         String paragraf1 = "";

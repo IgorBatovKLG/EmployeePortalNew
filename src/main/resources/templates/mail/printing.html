@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <!--    <link href="http://10.40.99.10:81/main.css" rel="stylesheet" />-->
+    <link media="print" rel="stylesheet" th:href="@{/css/print.css}">
+    <link media="print" rel="stylesheet" th:href="@{/css/test1.css}">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.maskedinput.min.js}"></script>
+    <title>Печать письма</title>
+</head>
+
+<body>
+
+<div>
+    <div class="noprint">
+        <div class="col-sm-12" style="text-align: center; text-indent: 30px; margin: 10px;">
+            <h3>Проверьте правильность адреса и нажмите кнопку Распечатать</h3>
+
+        </div>
+        <div class="col-sm-12" style="text-align: center;">
+            <a href="#" class="btn btn-primary action-print noprint">Распечатать</a>
+            <a href="/" class="btn btn-primary noprint">Вернуться назад</a>
+
+        </div>
+
+
+        <script>
+            $(function($){
+                $(".action-print").click(function(){
+                    window.print();
+                    return false;
+                });
+            });
+        </script>
+
+    </div>
+    <div class="container" th:each="s:${listMail}"  style="page-break-after:always;">
+        <div class="row">
+            <div class="col-sm-6" >
+                <img th:src="@{/img/pethnew.gif}">
+            </div>
+            <div class="col-sm-6" style="text-align: center;">
+                <h1>&ensp;</h1>
+                <h1>&ensp;</h1>
+                <h1>&ensp;</h1>
+                <h1>&ensp;</h1>
+                <h1>&ensp;</h1>
+                <h2 th:text="${s.fullName}"></h2>
+                <h2 th:text="${s.adres}"></h2>
+            </div>
+            <div class="col-sm-12" style="text-align: center; text-indent: 30px;">
+                <h2 th:text="${s.sexAndName}"></h2>
+            </div>
+            <div th:each="ss:${s.getParagraphs()}" class="col-sm-12" style="text-align: justify; text-indent: 30px;">
+                <h3 th:text="${ss}"></h3>
+            </div>
+            <div class="col-sm-12">
+                <h1>&ensp;</h1>
+                <h1>&ensp;</h1>
+            </div>
+            <div class="col-sm-6" style="text-align: left;">
+                <h2 th:text="${s.managerType}"></h2>
+            </div>
+            <div class="col-sm-6" style="text-align: right;">
+                <h2 th:text="${s.managerName}"></h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-sm-12 executor" style="font-size: 18px;
+    line-height: 0.5;">
+    <p th:text="${executor}"></p>
+    <p th:text="${phone}"></p>
+</div>
+
+
+
+</body>
+
+</html>
