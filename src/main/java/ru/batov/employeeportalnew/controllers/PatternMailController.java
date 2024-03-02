@@ -29,8 +29,7 @@ public class PatternMailController {
                                @RequestParam(name = "buro", required = false, defaultValue = "") String buro,
                                @RequestParam(name = "executor", required = false, defaultValue = "") String executor,
                                @RequestParam(name = "phone", required = false, defaultValue = "") String phone){
-
-
+        //todo data, css
 
         List<PrintMailModel> listPatternMail = mailService.getListPatternMail(date, buro);
 

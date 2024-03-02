@@ -1,35 +1,45 @@
-<!-- navbar.html -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy">
-    <a class="navbar-brand" href="#">Портал сотрудника</a>
+    <style>
+        .menu-item {
+            color: #555555;
+        }
+    </style>
+    <a class="navbar-brand" href="/">Портал сотрудника</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <!-- navbar.html -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="copy">
-        <!-- Ваши стили и разметка навбара -->
-        <style>
-            /* Define a style for the "menu-item" class */
-            .menu-item {
-                color: #555555; /* Set the color to gray or your desired shade */
-            }
-        </style>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li th:each="menuItem : ${menuItems}" class="nav-item menu-item" th:classappend="${#lists.isEmpty(menuItem.subMenu)} ? 'no-dropdown'">
-                    <a th:if="${#lists.isEmpty(menuItem.subMenu)}" th:href="${menuItem.url}" class="nav-link menu-item" th:text="${menuItem.name}"></a>
-                    <div th:if="${!#lists.isEmpty(menuItem.subMenu)}" class="nav-link dropdown menu-item">
-                        <a href="#" class="dropdown-toggle menu-item" th:id="'navbarDropdown-'" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${menuItem.name}"></a>
-                        <div class="dropdown-menu" th:aria-labelledby="'navbarDropdown-'">
-                            <a th:each="subMenuItem : ${menuItem.subMenu}" th:href="${subMenuItem.url}" class="dropdown-item menu-item" th:text="${subMenuItem.name}"></a>
-                        </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li th:each="menuItem : ${menuItems}" class="nav-item menu-item" th:classappend="${#lists.isEmpty(menuItem.subMenu)} ? 'no-dropdown'">
+                <a th:if="${#lists.isEmpty(menuItem.subMenu)}" th:href="${menuItem.url}" class="nav-link menu-item" th:text="${menuItem.name}"></a>
+                <div th:if="${!#lists.isEmpty(menuItem.subMenu)}" class="nav-link dropdown menu-item">
+                    <a href="#" class="dropdown-toggle menu-item" th:id="'navbarDropdown-'" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${menuItem.name}"></a>
+                    <div class="dropdown-menu" th:aria-labelledby="'navbarDropdown-'">
+                        <a th:each="subMenuItem : ${menuItem.subMenu}" th:href="${subMenuItem.url}" class="dropdown-item menu-item" th:text="${subMenuItem.name}"></a>
                     </div>
-                </li>
-                <!-- Other menu items... -->
-            </ul>
-        </div>
+                </div>
+            </li>
+        </ul>
 
+        <!-- Новый элемент списка для кнопки "Выход" с классом ml-auto -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item menu-item">
+                <a href="#" class="nav-link menu-item" th:text="Выход"></a>
+            </li>
+        </ul>
+    </div>
+    <style>
+        svg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
 
-
+    <svg width="50" height="50">
+        <svg enable-background="new 0 0 57.654 57.69" viewBox="0 0 57.654 57.69" xmlns="http://www.w3.org/2000/svg"><path d="m51.354 43.859c-.779 0-1.503-.496-1.756-1.277-.314-.971.217-2.012 1.187-2.326.493-.159.96-.805.943-1.305-.02-.598-.996-.908-1.414-1.014-6.155-1.553-9.936-3.043-10.098-13.666-.016-1.02.798-1.858 1.817-1.874 1-.051 1.857.797 1.874 1.817.128 8.331 2.083 8.824 7.309 10.142 2.561.646 4.131 2.318 4.202 4.473.071 2.146-1.432 4.27-3.495 4.939-.189.062-.38.091-.569.091z"/><path d="m42.181 40.746c-.135 0-.271-.016-.407-.045-6.617-1.489-10.114-5.742-10.114-12.302 0-1.02.826-1.846 1.846-1.846s1.846.827 1.846 1.846c0 4.825 2.299 7.589 7.233 8.698.994.225 1.619 1.213 1.396 2.207-.194.859-.957 1.442-1.8 1.442z"/><path d="m14.895 57.69c-1.02 0-1.846-.826-1.846-1.846 0-16.716 3.786-20.45 7.795-24.403 2.425-2.391 4.932-4.863 7.013-10.872.333-.963 1.383-1.473 2.349-1.14.963.334 1.474 1.385 1.14 2.349-2.363 6.823-5.31 9.728-7.908 12.292-3.741 3.689-6.696 6.604-6.696 21.774-.002 1.02-.828 1.846-1.847 1.846z"/><path d="m37.845 57.69h-22.95c-5.648 0-10.762-3.929-13.343-10.253-2.552-6.249-2.693-16.33 5.307-24.167 2.738-2.679 6.025-2.249 7.855-.437 1.723 1.704 2.299 4.823-.025 7.248-3.168 3.308-4.829 6.777-4.676 9.769.093 1.801.863 3.367 2.229 4.527.777.661.872 1.826.211 2.604-.661.775-1.827.869-2.602.211-2.161-1.838-3.38-4.311-3.525-7.152-.206-4.018 1.816-8.462 5.696-12.512.785-.82.542-1.627.095-2.069-.534-.528-1.518-.684-2.675.45-6.684 6.548-6.693 14.694-4.472 20.134 2.003 4.906 5.807 7.955 9.925 7.955h20.822c-.137-.422-.333-.826-.614-1.11-.2-.204-.519-.438-1.199-.438h-4.727c-.516 0-1.007-.215-1.356-.594s-.525-.887-.483-1.4c.005-.072.521-7.703-4.482-10.484-.892-.496-1.213-1.62-.717-2.512.495-.891 1.622-1.21 2.51-.717 5.214 2.898 6.222 8.885 6.377 12.015h2.879c1.523 0 2.854.539 3.849 1.56 1.97 2.02 1.947 5.217 1.938 5.575-.027 1-.846 1.797-1.847 1.797z"/><path d="m41.172 20.617c-1.02 0-1.846-.827-1.846-1.846s.826-1.846 1.846-1.846c12.791 0 12.791-2.228 12.791-6.667 0-1.28 0-2.488-5.697-2.488-.55 0-1.071-.246-1.422-.669-1.614-1.95-5.613-3.758-8.984-3.35-2.125.259-3.664 1.35-4.573 3.24-2.537 5.274-2.037 7.788-1.669 8.029 0 0 .034.016.128.016h2.641c1.069 0 1.43 0 1.43-5.874 0-1.02.826-1.846 1.846-1.846s1.846.827 1.846 1.846c0 5.133 0 9.566-5.121 9.566h-2.641c-1.399 0-2.574-.643-3.308-1.811-1.471-2.338-.93-6.432 1.521-11.527 1.449-3.011 4.096-4.895 7.454-5.305 4.392-.533 9.153 1.524 11.663 3.995 3.233.038 8.579.502 8.579 6.177-.002 8.036-3.698 10.36-16.484 10.36z"/><path d="m43.396 11.828c-.66 0-1.311-.26-1.771-.73-.47-.47-.729-1.11-.729-1.77 0-.65.26-1.3.729-1.77.931-.93 2.601-.93 3.53 0 .47.47.74 1.12.74 1.77 0 .66-.271 1.3-.74 1.77-.46.47-1.11.73-1.759.73z"/><path d="m48.622 57.69c-4.98 0-9.031-4.052-9.031-9.032s4.051-9.031 9.031-9.031 9.032 4.051 9.032 9.031-4.051 9.032-9.032 9.032zm0-14.372c-2.944 0-5.34 2.396-5.34 5.34 0 2.945 2.396 5.34 5.34 5.34s5.341-2.395 5.341-5.34c0-2.943-2.397-5.34-5.341-5.34z"/><path d="m3.502 22.625c-.525 0-1.048-.223-1.413-.657-.656-.779-.558-1.944.223-2.601 3.479-2.931 7.725-4.109 11.645-3.235.995.222 1.622 1.208 1.4 2.204s-1.211 1.625-2.203 1.4c-2.791-.622-5.873.274-8.463 2.455-.346.291-.769.434-1.189.434z"/><path d="m5.789 15.374c-.64 0-1.262-.333-1.603-.927-.508-.884-.203-2.013.681-2.521 1.604-.921 3.454-1.367 5.299-1.383 1.02.009 1.839.842 1.83 1.862-.009 1.014-.833 1.831-1.846 1.831-.025 0-.053-.001-.078 0-1.201 0-2.333.3-3.365.893-.29.166-.606.245-.918.245z"/></svg>
+    </svg>
 </nav>
+
+

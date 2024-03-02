@@ -218,7 +218,9 @@ public class MailService {
                 strings.add(paragraf6);
                 id++;
             }
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+            //todo обработка исключения
+        }
         if (!model.getIpraChildNumber().isBlank()){
             String paragraf6 = id + ". ИПРА " + model.getIpraChildNumber();
             strings.add(paragraf6);

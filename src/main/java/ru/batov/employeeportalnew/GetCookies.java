@@ -2,6 +2,8 @@ package ru.batov.employeeportalnew;
 
 
 
+import ru.batov.employeeportalnew.config.DbConnections;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ public class GetCookies {
 
     public HashMap<String, String> getCookies(){
         HashMap<String, String> cookies = new HashMap<>();
-        Connection connection = DBConnection.connection;
+        Connection connection = DbConnections.MainBaseMse();
         try (PreparedStatement statement = connection.prepareStatement("select name, VALUE from cookies")) {
             ResultSet resultSet = statement.executeQuery();
 

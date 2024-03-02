@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портал сотрудника</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div th:insert="~{navbar :: copy}"></div>
+
+<div id="main">
+    <div style="width:60%">
+        <div class="row">
+            <div class="col-sm-11">
+                <td> <h1 th:text="${LastTime}" class="text-center"></h1></td>
+                <div class="">
+                    <div class="">
+                        <td th:switch="${errorCount}">
+                            <table th:case="1" id="gridResults" class="app-table table-striped nowrap sticky-header header-nowrap " style="table-layout:fixed;width:auto;background:#ff00005c;">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Ссылка ЕВА</th>
+                                    <th scope="col th-sm" style="min-width: 250px">ФИО</th>
+                                    <th scope="col th-sm">СНИЛС</th>
+                                    <th scope="col th-sm" style="min-width: 250px">Бюро</th>
+                                    <th scope="col th-sm">Время прибытыя</th>
+                                    <th scope="col th-sm">Время начала</th>
+                                    <th scope="col th-sm">Ожидание в очереди</th>
+                                    <th scope="col th-sm">Стадия</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr  th:each="s:${error}">
+                                    <td><a th:href="${s.id}" target="_blank">
+                                        <button class="btn btn-primary">Открыть дело</button>
+                                    </a>
+                                    <td th:text="${s.name}"></td>
+                                    <td th:text="${s.SNILS}"></td>
+                                    <td th:text="${s.buro}"></td>
+                                    <td th:text="${s.dateStart}"></td>
+                                    <td th:text="${s.dateAnd}"></td>
+                                    <td th:text="${s.timeExpertise}"></td>
+                                    <td th:text="${s.MetaStateName}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <table class="app-table table-striped nowrap sticky-header header-nowrap " style="table-layout:fixed;width:auto;">
+                            <thead>
+                            <tr>
+                                <th scope="col">Ссылка ЕВА</th>
+                                <th scope="col th-sm" style="min-width: 250px">ФИО</th>
+                                <th scope="col th-sm">СНИЛС</th>
+                                <th scope="col th-sm" style="min-width: 250px">Бюро</th>
+                                <th scope="col th-sm">Время прибытыя</th>
+                                <th scope="col th-sm">Время начала</th>
+                                <th scope="col th-sm">Ожидание в очереди</th>
+                                <th scope="col th-sm">Стадия</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr  th:each="s:${model}">
+                                <td><a th:href="${s.id}" target="_blank">
+                                    <button class="btn btn-primary">Открыть дело</button>
+                                </a>
+                                <td th:text="${s.name}"></td>
+                                <td th:text="${s.SNILS}"></td>
+                                <td th:text="${s.buro}"></td>
+                                <td th:text="${s.dateStart}"></td>
+                                <td th:text="${s.dateAnd}"></td>
+                                <td th:text="${s.timeExpertise}"></td>
+                                <td th:text="${s.MetaStateName}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 col-md-12 table">
+                <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-2 col-md-1"></div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
